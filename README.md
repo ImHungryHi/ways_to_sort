@@ -37,7 +37,7 @@ Example:
 ### Origin file
 `
 Twas brillig and the slithy toves did gyre and gimble in the wabe.
-All mimsy were the borooves and the mome raths outgrabe.
+All mimsy were the borogoves and the mome raths outgrabe.
 `
 
 ### Target file
@@ -48,12 +48,12 @@ Oops
 
 ### HashMap contents
 `
-"All mimsy were the borooves and the mome raths outgrabe." => 1,
+"All mimsy were the borogoves and the mome raths outgrabe." => 1,
 "Oops" => -1
 `
 
 ### Result
 `
-[ORIGIN +1] [All mimsy were the borooves and the mome raths outgrabe.]
+[ORIGIN +1] [All mimsy were the borogoves and the mome raths outgrabe.]
 [TARGET +1] [Oops]
 `
