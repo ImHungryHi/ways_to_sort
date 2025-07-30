@@ -57,3 +57,46 @@ Oops
 [ORIGIN +1] [All mimsy were the borogoves and the mome raths outgrabe.]
 [TARGET +1] [Oops]
 `
+
+## Hybrid sort
+
+This way of sorting uses a combination of insertion sort and merge sort.
+
+### Insertion sort
+
+1. Loop through each element of the initial list.
+    - Eg { 5, 4, 1, 3, 2, 6, 23, 22, 0, 21, 19, 22 }
+2. Compare at least 2 elements. If the first is less than the second - insert into a new list as is. 
+If it's the reverse, then insert in a sorted order.
+    - Eg { 5, 4 } -> {{ 4, 5 }}
+    - Eg { 4, 5 } -> {{ 4, 5 }}
+3. Move to the next element. If this is less than the largest, start a new list. If it's greater or equals, 
+insert into the existing list.
+    - Eg 1 (cref bulletin 1) -> {{ 4, 5 } { 1 }}
+    - Eg 6 -> {{ 4, 5, 6 }}
+4. Rinse and repeat until all elements are separated into sorted sublists.
+    - {{ 4, 5 }, { 1, 3 }, { 2, 6, 23 }, { 0, 22 }, { 19, 21, 22 }}
+
+### Merge sort
+
+1. Using the above list of sublists, fetch the first element of each sublist to find the lowest value to insert 
+into a result list.
+    - { 4, 1, 2, 0, 19 } -> { 0 }
+    - The remaining elements are {{ 5 }, { 3 }, { 6, 23 }, { 22 }, { 21, 22 }}
+2. Remove the lowest element from the equation and replace with the next element from the same sublist that contained it.
+    - { 4, 1, 2, 22, 19 }
+    - The list of sublists is updated to {{ 5 }, { 3 }, { 6, 23 }, { 21, 22 }} 
+          -> one less sublist to check next as it was emptied out.
+3. Rinse and repeat
+    - { 4, 1, 2, 22, 19 } -> { 0, 1 } || Taking 3 from second sublist {{ 5 }, { 6, 23 }, { 21, 22 }}
+    - { 4, 3, 2, 22, 19 } -> { 0, 1, 2 } || Taking 6 from third sublist {{ 5 }, { 23 }, { 21, 22 }}
+    - { 4, 3, 6, 22, 19 } -> { 0, 1, 2, 3 } || Sublist that contained 3 already empty {{ 5 }, { 23 }, { 21, 22 }}
+    - { 4, 6, 22, 19 } -> { 0, 1, 2, 3, 4 } || Taking 5 from first sublist {{ 23 }, { 21, 22 }}
+    - { 5, 6, 22, 19 } -> { 0, 1, 2, 3, 4, 5 } || Emptied first sublist {{ 23 }, { 21, 22 }}
+    - { 6, 22, 19 } -> { 0, 1, 2, 3, 4, 5, 6 } || Taking 23 from third sublist {{ 21, 22 }}
+    - { 23, 22, 19 } -> { 0, 1, 2, 3, 4, 5, 6, 19 } || Taking 21 from fifth sublist {{ 22 }}
+    - { 23, 22, 21 } -> { 0, 1, 2, 3, 4, 5, 6, 19, 21 } || Taking 22 from fifth sublist
+    - { 23, 22, 22 } -> { 0, 1, 2, 3, 4, 5, 6, 19, 21, 22 } || Emptied fourth sublist
+    - { 23, 22 } -> { 0, 1, 2, 3, 4, 5, 6, 19, 21, 22, 22 } || Emptied fifth sublist
+    - { 23 } -> { 0, 1, 2, 3, 4, 5, 6, 19, 21, 22, 22, 23 } || Emptied third sublist
+    - All done { 0, 1, 2, 3, 4, 5, 6, 19, 21, 22, 22, 23 }
